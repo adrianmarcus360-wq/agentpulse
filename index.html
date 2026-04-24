@@ -3,132 +3,158 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AgentPulse — The AI Agent Economy, Live</title>
-  <meta name="description" content="Watch the AI agent economy unfold in real time. Funding, launches, model updates, and the builders making it happen.">
-  <meta property="og:title" content="AgentPulse — The AI Agent Economy, Live">
-  <meta property="og:description" content="Watch the AI agent economy unfold in real time. Funding, launches, model updates, and the builders making it happen.">
-  <meta property="og:image" content="/og.png">
+  <meta name="description" content="The AI agent economy, mapped live. 5,000+ entities tracked in real time.">
+  <title>AgentPulse — AI Agent Economy, Live</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="AgentPulse">
+  <meta property="og:description" content="The AI agent economy, mapped live.">
+  <meta property="og:image" content="https://agentpulse-delta.vercel.app/api/og">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="AgentPulse — The AI Agent Economy, Live">
-  <meta name="twitter:description" content="Watch the AI agent economy unfold in real time.">
-  <meta name="twitter:image" content="/og.png">
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="noise-overlay"></div>
 
-  <!-- Header -->
-  <header id="header">
-    <div class="header-inner">
-      <div class="logo">
-        <span class="logo-dot"></span>
-        <span class="logo-text">AgentPulse</span>
-        <span class="logo-live">LIVE</span>
-      </div>
-      <div class="header-right">
-        <button class="share-btn" id="shareBtn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
-          Share
-        </button>
-        <a href="https://agentroster.io" target="_blank" class="powered-by">Powered by AgentRoster →</a>
-      </div>
+  <!-- TOP STATS BAR (48px) -->
+  <header class="stats-bar" role="banner">
+    <div class="stats-brand">AGENTPULSE</div>
+    <div class="stats-center">
+      <span class="stats-item">
+        <span class="stats-dot"></span>
+        <span class="stats-value" id="stat-entities">0</span>
+        <span class="stats-label">entities</span>
+      </span>
+      <span class="stats-divider">·</span>
+      <span class="stats-item">
+        <span class="stats-icon">⚡</span>
+        <span class="stats-value" id="stat-events-hr">0</span>
+        <span class="stats-label">/hr</span>
+      </span>
+    </div>
+    <div class="stats-live">
+      <span class="live-dot" aria-hidden="true"></span>
+      <span class="live-text">LIVE</span>
     </div>
   </header>
 
-  <!-- Globe section -->
-  <section id="globe-section">
-    <canvas id="globeCanvas"></canvas>
-    <div id="globe-overlay">
-      <div id="hero-content">
-        <p class="eyebrow">Real-time Intelligence</p>
-        <h1>The AI Agent Economy<br><em>Mapped Live.</em></h1>
-        <p class="sub">Every launch. Every funding round. Every model drop.<br>Watch the ecosystem pulse in real time.</p>
-        <button class="cta-btn" id="exploreBtn">Explore the ecosystem ↓</button>
-      </div>
-    </div>
-  </section>
+  <!-- MODE TABS (40px) -->
+  <nav class="mode-nav" role="navigation" aria-label="Visualization modes">
+    <button class="mode-tab active" data-mode="pulse" aria-selected="true">PULSE</button>
+    <button class="mode-tab soon" data-mode="warroom" aria-selected="false">WAR ROOM</button>
+    <button class="mode-tab soon" data-mode="cambrian" aria-selected="false">CAMBRIAN</button>
+    <button class="mode-tab soon" data-mode="speedometer" aria-selected="false">SPEEDOMETER</button>
+    <button class="mode-tab soon" data-mode="globe" aria-selected="false">GLOBE</button>
+    <button class="mode-tab soon" data-mode="jobs" aria-selected="false">JOBS</button>
+  </nav>
 
-  <!-- Counters -->
-  <section id="counters-section">
-    <div class="counters-grid">
-      <div class="counter-card" data-index="0">
-        <div class="counter-value" id="cnt-agents">—</div>
-        <div class="counter-label">AI Entities<br><span>Tracked Live</span></div>
-      </div>
-      <div class="counter-card" data-index="1">
-        <div class="counter-value" id="cnt-funding">—</div>
-        <div class="counter-label">Research Papers<br><span>Indexed</span></div>
-      </div>
-      <div class="counter-card" data-index="2">
-        <div class="counter-value" id="cnt-models">—</div>
-        <div class="counter-label">MCP Servers<br><span>In Directory</span></div>
-      </div>
-      <div class="counter-card" data-index="3">
-        <div class="counter-value" id="cnt-builders">—</div>
-        <div class="counter-label">Active Builders<br><span>on Platform</span></div>
-      </div>
-    </div>
-  </section>
+  <!-- MAIN VISUALIZATION AREA -->
+  <main class="viz-area" id="viz-area" role="main">
 
-  <!-- Activity Feed -->
-  <section id="feed-section">
-    <div class="section-header">
-      <h2>Live Activity</h2>
-      <div class="feed-status">
-        <span class="pulse-dot"></span>
-        <span>Updating live</span>
-      </div>
-    </div>
-    <div id="feed-list"></div>
-    <div class="feed-footer">
-      <a href="https://agentroster.io" target="_blank" class="see-all-btn">See all on AgentRoster →</a>
-    </div>
-  </section>
+    <!-- PULSE MODE -->
+    <div class="mode-view" id="mode-pulse">
+      <div class="pulse-layout">
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-left">
-        <span class="logo-text">AgentPulse</span>
-        <span class="footer-sub">by AgentRoster</span>
-      </div>
-      <div class="footer-right">
-        <a href="https://agentroster.io" target="_blank">AgentRoster →</a>
+        <!-- EKG Canvas -->
+        <div class="pulse-canvas-wrap" aria-label="EKG signal visualization">
+          <canvas id="ekg-canvas"></canvas>
+          <div class="ekg-axis-labels" aria-hidden="true">
+            <span class="axis-label">FUNDING</span>
+            <span class="axis-label">LAUNCH</span>
+            <span class="axis-label">RESEARCH</span>
+          </div>
+          <!-- Signal legend -->
+          <div class="signal-legend" aria-label="Signal types">
+            <span class="legend-item" data-type="funding">
+              <span class="legend-dot"></span>Funding
+            </span>
+            <span class="legend-item" data-type="launch">
+              <span class="legend-dot"></span>Launch
+            </span>
+            <span class="legend-item" data-type="research">
+              <span class="legend-dot"></span>Research
+            </span>
+            <span class="legend-item" data-type="jobs">
+              <span class="legend-dot"></span>Jobs
+            </span>
+            <span class="legend-item" data-type="infra">
+              <span class="legend-dot"></span>Infra/MCP
+            </span>
+          </div>
+        </div>
+
+        <!-- Live Event Panel (240px) -->
+        <aside class="pulse-panel" aria-label="Live events">
+          <div class="panel-header">
+            <span class="panel-title">SIGNAL FEED</span>
+            <span class="panel-count" id="panel-event-count">0 events</span>
+          </div>
+          <ul class="event-list" id="event-list" aria-live="polite" aria-label="Recent signals"></ul>
+        </aside>
+
       </div>
     </div>
-  </footer>
 
-  <!-- Share modal -->
-  <div id="share-modal" class="hidden">
-    <div class="modal-backdrop" id="modalBackdrop"></div>
-    <div class="modal-box">
-      <div class="modal-header">
-        <h3>Share AgentPulse</h3>
-        <button class="modal-close" id="modalClose">✕</button>
+    <!-- COMING SOON placeholder for other modes -->
+    <div class="mode-view hidden" id="mode-warroom">
+      <div class="coming-soon"><span class="cs-label">WAR ROOM</span><span class="cs-sub">Coming soon</span></div>
+    </div>
+    <div class="mode-view hidden" id="mode-cambrian">
+      <div class="coming-soon"><span class="cs-label">CAMBRIAN EXPLOSION</span><span class="cs-sub">Coming soon</span></div>
+    </div>
+    <div class="mode-view hidden" id="mode-speedometer">
+      <div class="coming-soon"><span class="cs-label">SPEEDOMETER</span><span class="cs-sub">Coming soon</span></div>
+    </div>
+    <div class="mode-view hidden" id="mode-globe">
+      <div class="coming-soon"><span class="cs-label">GLOBE</span><span class="cs-sub">Coming soon</span></div>
+    </div>
+    <div class="mode-view hidden" id="mode-jobs">
+      <div class="coming-soon"><span class="cs-label">JOBS</span><span class="cs-sub">Coming soon</span></div>
+    </div>
+
+  </main>
+
+  <!-- MULTI-LANE TICKER RAIL -->
+  <div class="ticker-rail" aria-label="Live signal tickers" aria-live="off">
+    <div class="ticker-lane" data-type="funding">
+      <div class="ticker-lane-label">FUNDING</div>
+      <div class="ticker-track-wrap">
+        <div class="ticker-track" id="ticker-funding"></div>
       </div>
-      <canvas id="shareCanvas" width="1200" height="630"></canvas>
-      <div class="modal-actions">
-        <button class="modal-btn primary" id="shareTwitter">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.732-8.837L1.254 2.25H8.08l4.254 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          Share on X
-        </button>
-        <button class="modal-btn" id="copyLink">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-          Copy Link
-        </button>
-        <button class="modal-btn" id="downloadCard">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-          Download Card
-        </button>
+    </div>
+    <div class="ticker-lane" data-type="launch">
+      <div class="ticker-lane-label">LAUNCHES</div>
+      <div class="ticker-track-wrap">
+        <div class="ticker-track" id="ticker-launch"></div>
+      </div>
+    </div>
+    <div class="ticker-lane" data-type="research">
+      <div class="ticker-lane-label">RESEARCH</div>
+      <div class="ticker-track-wrap">
+        <div class="ticker-track" id="ticker-research"></div>
+      </div>
+    </div>
+    <div class="ticker-lane" data-type="jobs">
+      <div class="ticker-lane-label">JOBS</div>
+      <div class="ticker-track-wrap">
+        <div class="ticker-track" id="ticker-jobs"></div>
       </div>
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <!-- FOOTER MARK (32px) -->
+  <footer class="site-footer" role="contentinfo">
+    <a class="ar-mark" href="https://agentroster.io" target="_blank" rel="noopener" aria-label="Powered by AgentRoster">
+      Powered by AgentRoster · <span id="mark-count">5,062</span> entities · api.agentroster.com
+    </a>
+  </footer>
+
   <script src="app.js"></script>
 </body>
 </html>
