@@ -501,8 +501,9 @@ async function init() {
     seedDelay += 600;
   }
 
-  // Start EKG
+  // Start EKG + expose to phase2 switcher
   ekg.start();
+  window._ekg = ekg;
 
   // Mode tabs
   initModeTabs();
