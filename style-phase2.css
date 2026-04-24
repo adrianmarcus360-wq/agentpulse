@@ -1,0 +1,357 @@
+/* =============================================================
+   AGENTPULSE V2 — Phase 2 Styles
+   Append to style.css
+   ============================================================= */
+
+/* ── SPEEDOMETER VIEW ─────────────────────────────────────── */
+.speedometer-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 24px 16px 16px;
+  background: var(--canvas-void);
+  /* redzone ambient overlay */
+  position: relative;
+}
+.speedometer-view::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(239,68,68, var(--redzone-alpha, 0));
+  transition: background 1200ms linear;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.gauge-wrap {
+  position: relative;
+  width: min(560px, 100%);
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+#gauge-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 560 / 320;
+}
+
+#sparkline-canvas {
+  display: block;
+  width: min(560px, 100%);
+  height: 64px;
+  z-index: 1;
+  margin-top: -4px;
+}
+
+.sparkline-label-row {
+  display: flex;
+  justify-content: space-between;
+  width: min(560px, 100%);
+  padding: 4px 0;
+  z-index: 1;
+}
+
+.spark-epoch {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: var(--type-nano);
+  color: var(--text-dim);
+}
+
+/* ── WAR ROOM LAYOUT ──────────────────────────────────────── */
+.warroom-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  position: relative;
+  background: var(--canvas-void);
+}
+
+/* Panel 1: Top funding strip */
+.wr-top-strip {
+  height: 24px;
+  flex-shrink: 0;
+  background: var(--canvas-surface);
+  border-bottom: 1px solid var(--canvas-border);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.wr-top-strip .ticker-track-wrap {
+  flex: 1;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
+}
+.wr-top-strip .ticker-track { white-space: nowrap; will-change: transform; }
+.wr-top-strip .ticker-item {
+  font-size: var(--type-nano);
+  color: var(--signal-funding);
+  padding: 0 18px;
+}
+.wr-top-strip .ticker-item::after { content: '·'; color: #F59E0B55; margin-left: 14px; }
+
+/* Panel 2+3: Main split */
+.wr-main {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+/* Panel 2: Velocity heatmap */
+.wr-heatmap {
+  flex: 0 0 65%;
+  border-right: 1px solid var(--canvas-border);
+  overflow-y: auto;
+  position: relative;
+  scrollbar-width: thin;
+  scrollbar-color: var(--canvas-border) transparent;
+}
+.wr-heatmap::-webkit-scrollbar { width: 4px; }
+.wr-heatmap::-webkit-scrollbar-thumb { background: var(--canvas-border); border-radius: 2px; }
+
+.wr-heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 64px);
+  gap: 1px;
+  padding: 1px;
+  background: var(--canvas-border);
+}
+
+.hm-cell {
+  width: 64px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 4px 6px;
+  cursor: pointer;
+  transition: background 400ms linear, outline 80ms linear;
+  outline: 1px solid transparent;
+}
+.hm-cell:hover { outline: 1px solid rgba(255,255,255,0.2); z-index: 1; }
+
+.hm-name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  line-height: 1.3;
+}
+.hm-vel {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: var(--type-nano);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Panel 3: Signal Feed */
+.wr-feed {
+  flex: 0 0 35%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.wr-feed-header {
+  height: 28px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: var(--type-nano);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--canvas-border);
+  flex-shrink: 0;
+}
+.wr-feed-list {
+  flex: 1;
+  overflow-y: auto;
+  list-style: none;
+  scrollbar-width: none;
+}
+.wr-feed-list::-webkit-scrollbar { display: none; }
+
+.wr-feed-item {
+  height: 56px;
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--canvas-border);
+  border-left: 3px solid var(--sig-color, #2A2A44);
+  transition: opacity 400ms linear;
+  animation: event-slide-in var(--t2) var(--ease-signal);
+}
+.wfi-body {
+  flex: 1;
+  padding: 8px 10px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.wfi-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wfi-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: var(--type-nano);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Panel 4: Category Race */
+.wr-category-race {
+  height: 96px;
+  flex-shrink: 0;
+  background: var(--canvas-surface);
+  border-top: 1px solid var(--canvas-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  padding: 6px 16px;
+  overflow: hidden;
+}
+.race-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 13px;
+  margin-bottom: 1px;
+}
+.race-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  width: 100px;
+  flex-shrink: 0;
+  text-align: right;
+}
+.race-bar-track {
+  flex: 1;
+  height: 6px;
+  background: var(--canvas-border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.race-bar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1000ms linear;
+}
+.race-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--text-secondary);
+  width: 28px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Entity Detail Panel */
+.wr-detail-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 360px;
+  height: 100%;
+  background: var(--canvas-raised);
+  border-left: 1px solid var(--canvas-border-hi);
+  z-index: 20;
+  padding: 20px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: detail-slide-in 200ms var(--ease-signal);
+  box-shadow: -8px 0 32px rgba(0,0,0,0.5);
+}
+.wr-detail-panel.hidden { display: none; }
+
+@keyframes detail-slide-in {
+  from { transform: translateX(32px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+.wr-detail-close {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+.wr-detail-close:hover { color: var(--text-primary); background: var(--canvas-border); }
+
+.wd-name {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-right: 24px;
+}
+.wd-badge {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: var(--type-nano);
+  letter-spacing: 0.08em;
+  border: 1px solid;
+  border-radius: 3px;
+  padding: 2px 7px;
+}
+.wd-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: var(--type-small);
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--canvas-border);
+  padding-bottom: 8px;
+}
+.wd-row strong { color: var(--text-primary); }
+.wd-bar-wrap {
+  height: 4px;
+  background: var(--canvas-border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: auto;
+}
+.wd-bar { height: 100%; border-radius: 2px; transition: width 600ms var(--ease-signal); }
+
+/* ── Enable speedometer mode tab ───────────────────────────── */
+.mode-tab[data-mode="speedometer"],
+.mode-tab[data-mode="warroom"] {
+  opacity: 1;
+  cursor: pointer;
+}
+/* Remove "soon" style for these two */
+.mode-tab[data-mode="speedometer"].soon,
+.mode-tab[data-mode="warroom"].soon {
+  opacity: 1;
+}
+
+/* ── Reduced motion overrides for Phase 2 ─────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .wr-feed-item   { animation: none; }
+  .race-bar       { transition: none; }
+  .hm-cell        { transition: none; }
+  .wr-detail-panel{ animation: none; }
+}
