@@ -19,6 +19,7 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-phase2.css">
 </head>
 <body>
 
@@ -47,9 +48,9 @@
   <!-- MODE TABS (40px) -->
   <nav class="mode-nav" role="navigation" aria-label="Visualization modes">
     <button class="mode-tab active" data-mode="pulse" aria-selected="true">PULSE</button>
-    <button class="mode-tab soon" data-mode="warroom" aria-selected="false">WAR ROOM</button>
+    <button class="mode-tab" data-mode="warroom" aria-selected="false">WAR ROOM</button>
     <button class="mode-tab soon" data-mode="cambrian" aria-selected="false">CAMBRIAN</button>
-    <button class="mode-tab soon" data-mode="speedometer" aria-selected="false">SPEEDOMETER</button>
+    <button class="mode-tab" data-mode="speedometer" aria-selected="false">SPEEDOMETER</button>
     <button class="mode-tab soon" data-mode="globe" aria-selected="false">GLOBE</button>
     <button class="mode-tab soon" data-mode="jobs" aria-selected="false">JOBS</button>
   </nav>
@@ -103,13 +104,47 @@
 
     <!-- COMING SOON placeholder for other modes -->
     <div class="mode-view hidden" id="mode-warroom">
-      <div class="coming-soon"><span class="cs-label">WAR ROOM</span><span class="cs-sub">Coming soon</span></div>
+      <div class="warroom-layout">
+        <!-- Panel 1: Top funding ticker strip (24px) -->
+        <div class="wr-top-strip">
+          <div class="ticker-track-wrap">
+            <div class="ticker-track" id="ticker-wr-funding"></div>
+          </div>
+        </div>
+        <!-- Panel 2+3: Heatmap + Feed -->
+        <div class="wr-main">
+          <div class="wr-heatmap" aria-label="Velocity heatmap">
+            <div class="wr-heatmap-grid" id="heatmap-grid"></div>
+            <!-- Entity detail panel (overlay) -->
+            <aside class="wr-detail-panel hidden" id="wr-detail" aria-label="Entity details">
+              <button class="wr-detail-close" id="wr-detail-close" aria-label="Close">✕</button>
+              <div class="wr-detail-content" id="wr-detail-content"></div>
+            </aside>
+          </div>
+          <div class="wr-feed" aria-label="Live signal feed">
+            <div class="wr-feed-header">SIGNAL FEED</div>
+            <ul class="wr-feed-list" id="wr-feed-list" aria-live="polite"></ul>
+          </div>
+        </div>
+        <!-- Panel 4: Category race (96px) -->
+        <div class="wr-category-race" id="wr-race" aria-label="Category velocity race"></div>
+      </div>
     </div>
     <div class="mode-view hidden" id="mode-cambrian">
       <div class="coming-soon"><span class="cs-label">CAMBRIAN EXPLOSION</span><span class="cs-sub">Coming soon</span></div>
     </div>
     <div class="mode-view hidden" id="mode-speedometer">
-      <div class="coming-soon"><span class="cs-label">SPEEDOMETER</span><span class="cs-sub">Coming soon</span></div>
+      <div class="speedometer-view">
+        <div class="gauge-wrap">
+          <canvas id="gauge-canvas" width="560" height="320"></canvas>
+        </div>
+        <canvas id="sparkline-canvas" width="560" height="64"></canvas>
+        <div class="sparkline-label-row" aria-hidden="true">
+          <span class="spark-epoch">Jan 2022</span>
+          <span class="spark-epoch">Jan 2024</span>
+          <span class="spark-epoch">Today</span>
+        </div>
+      </div>
     </div>
     <div class="mode-view hidden" id="mode-globe">
       <div class="coming-soon"><span class="cs-label">GLOBE</span><span class="cs-sub">Coming soon</span></div>
@@ -156,5 +191,6 @@
   </footer>
 
   <script src="app.js"></script>
+  <script src="app-phase2.js"></script>
 </body>
 </html>
