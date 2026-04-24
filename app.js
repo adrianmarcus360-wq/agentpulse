@@ -9,7 +9,7 @@
   // CONFIG — swap API_URL when Seed Data Builder provides it
   // ============================================================
   const CONFIG = {
-    API_URL: null, // e.g. 'https://api.agentroster.io/pulse'
+    API_URL: 'https://agentroster-v20.vercel.app/api/live?type=all',
     REFRESH_MS: 30000,
     GLOBE_RADIUS: 1.5,
     AUTO_ROTATE_SPEED: 0.0015,
@@ -20,9 +20,9 @@
   // ============================================================
   const MOCK = {
     counters: {
-      agents: 284,
-      funding: '$1.2B',
-      models: 47,
+      agents: 5062,
+      funding: '1,221',
+      models: 913,
       builders: 8420,
     },
     locations: [
@@ -56,18 +56,18 @@
       { from: { lat: 35.6762, lng: 139.6503 }, to: { lat: 37.7749, lng: -122.4194 } },
     ],
     feed: [
-      { type: 'funding', icon: '💰', title: 'Cognition AI closes $175M Series B at $2B valuation', meta: 'Cognition AI · San Francisco', time: '2m ago', isNew: true },
-      { type: 'launch', icon: '🚀', title: 'Devin 2.0 launches with multi-repo reasoning support', meta: 'Cognition AI · Product Launch', time: '8m ago', isNew: true },
-      { type: 'model', icon: '🧠', title: 'Anthropic releases Claude 3.7 Sonnet with extended context', meta: 'Anthropic · Model Release', time: '14m ago', isNew: false },
-      { type: 'funding', icon: '💰', title: 'Cursor raises $100M at $1B valuation to expand agent capabilities', meta: 'Cursor · New York', time: '31m ago', isNew: false },
-      { type: 'launch', icon: '🚀', title: 'Perplexity launches enterprise agent platform for research teams', meta: 'Perplexity AI · Product Launch', time: '47m ago', isNew: false },
-      { type: 'model', icon: '🧠', title: 'Google DeepMind drops Gemini 2.5 Pro — tops GPQA benchmark', meta: 'Google DeepMind · Model Release', time: '1h ago', isNew: false },
-      { type: 'hire', icon: '👤', title: 'OpenAI hires Dr. Ilya Sutskever advisors for safety research', meta: 'OpenAI · Executive Hire', time: '2h ago', isNew: false },
-      { type: 'funding', icon: '💰', title: 'Mistral AI announces $600M round ahead of Paris AI Summit', meta: 'Mistral AI · Paris', time: '3h ago', isNew: false },
-      { type: 'product', icon: '⚡', title: 'Together AI launches inference layer with 10ms p50 latency', meta: 'Together AI · Infrastructure', time: '4h ago', isNew: false },
-      { type: 'launch', icon: '🚀', title: 'Letta releases open-source memory layer for long-running agents', meta: 'Letta · Open Source', time: '5h ago', isNew: false },
-      { type: 'model', icon: '🧠', title: 'Meta releases Llama 4 Scout with 17B active parameters', meta: 'Meta AI · Model Release', time: '6h ago', isNew: false },
-      { type: 'funding', icon: '💰', title: 'Hebbia lands $130M to bring AI research agents to enterprise', meta: 'Hebbia · New York', time: '8h ago', isNew: false },
+      { type: 'funding', icon: '💰', title: 'OpenAI closes $40B round at $300B valuation', meta: 'OpenAI · San Francisco', time: '2m ago', isNew: true },
+      { type: 'mcp', icon: '🔌', title: '913 MCP servers now tracked across 72 categories', meta: 'AgentRoster · Directory Update', time: '6m ago', isNew: true },
+      { type: 'model', icon: '🧠', title: 'Google releases Gemini 2.5 Flash — fastest in class', meta: 'Google DeepMind · Model Release', time: '12m ago', isNew: false },
+      { type: 'paper', icon: '📄', title: 'Multi-agent coordination paper hits 1,200 citations', meta: 'arXiv · Research · Stanford', time: '28m ago', isNew: false },
+      { type: 'launch', icon: '🚀', title: 'Cursor 1.0 ships with full agentic edit mode', meta: 'Cursor · Product Launch', time: '44m ago', isNew: false },
+      { type: 'funding', icon: '💰', title: 'Cognition AI raises $175M Series B for Devin platform', meta: 'Cognition AI · San Francisco', time: '1h ago', isNew: false },
+      { type: 'model', icon: '🧠', title: 'Meta drops Llama 4 Scout — 17B active params, open weights', meta: 'Meta AI · Open Source', time: '2h ago', isNew: false },
+      { type: 'launch', icon: '🚀', title: 'Letta open-sources persistent memory layer for agents', meta: 'Letta · Open Source', time: '3h ago', isNew: false },
+      { type: 'paper', icon: '📄', title: 'AgentBench 2.0 — new benchmark for long-horizon agent tasks', meta: 'arXiv · Research · CMU', time: '4h ago', isNew: false },
+      { type: 'funding', icon: '💰', title: 'Mistral AI raises €600M ahead of enterprise expansion', meta: 'Mistral AI · Paris', time: '5h ago', isNew: false },
+      { type: 'mcp', icon: '🔌', title: 'Anthropic releases official MCP filesystem + browser tools', meta: 'Anthropic · MCP · Open Source', time: '6h ago', isNew: false },
+      { type: 'launch', icon: '🚀', title: 'Hebbia Atlas launches multi-agent research for hedge funds', meta: 'Hebbia · New York · Enterprise', time: '8h ago', isNew: false },
     ],
   };
 
@@ -503,9 +503,9 @@
 
     // Stats bar
     const stats = [
-      { label: 'Agents This Week', value: MOCK.counters.agents.toString() },
-      { label: 'Funding This Month', value: MOCK.counters.funding },
-      { label: 'Model Updates 24h', value: MOCK.counters.models.toString() },
+      { label: 'AI Entities', value: MOCK.counters.agents.toLocaleString() },
+      { label: 'Research Papers', value: MOCK.counters.funding },
+      { label: 'MCP Servers', value: MOCK.counters.models.toString() },
     ];
 
     ctx.fillStyle = 'rgba(255,255,255,0.04)';
@@ -633,3 +633,4 @@
   });
 
 })();
+
